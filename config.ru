@@ -1,7 +1,3 @@
-class App
-    def call(env)
-        [200, {}, ["Hello World."]]
-    end
-end
+require_relative "./app.rb"
 
-run App.new
+run PowerGPA::Application

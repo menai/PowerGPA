@@ -1,15 +1,30 @@
+GIT
+  remote: git://github.com/sinatra/sinatra.git
+  revision: af6dad2a6c31e31617712b15f455b2a3d3eb1c06
+  specs:
+    rack-protection (2.0.0.beta2)
+      rack
+    sinatra (2.0.0.beta2)
+      mustermann (= 1.0.0.beta2)
+      rack (~> 2.0)
+      rack-protection (= 2.0.0.beta2)
+      tilt (~> 2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
+    mustermann (1.0.0.beta2)
     rack (2.0.1)
     rake (11.2.2)
+    tilt (2.0.5)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  rack
+  rack (~> 2)
   rake
+  sinatra!
 
 BUNDLED WITH
    1.12.5
