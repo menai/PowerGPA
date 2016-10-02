@@ -13,6 +13,10 @@ module PowerGPA
     end
 
     def connect
+      unless @url.start_with?('http://') || @url.start_with?('http://')
+        @url = "http://#{@url}"
+      end
+
       soap_endpoint = @url + "/pearson-rest/services/PublicPortalService"
 
       client = Savon.client(
