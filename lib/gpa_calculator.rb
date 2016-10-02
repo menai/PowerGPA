@@ -5,6 +5,8 @@ module PowerGPA
     end
 
     def to_h
+      return 0 unless @grades.size > 0
+
       # first convert based on unweighter GPA scale
       @grades.each do |course, grade|
         @grades[course] =

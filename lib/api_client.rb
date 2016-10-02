@@ -60,6 +60,7 @@ module PowerGPA
           final_grades = {}
 
           d['sections'].each do |sect|
+            next unless valid_section?(sect)
             courses[sect['schoolCourseTitle']] = sect['id']
           end
 
@@ -115,6 +116,12 @@ module PowerGPA
         courses.values.include?(grade['sectionid']) &&
         terms.include?(grade['reportingTermId']) &&
         grade['percent'] != 0
+      end
+
+      def valid_section?(section)
+        ['AP', 'Acc', 'CPA', 'CPB'].any? do |name|
+          section['schoolCourseTitle'].include?(name)
+        end
       end
     end
   end
