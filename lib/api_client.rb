@@ -13,7 +13,7 @@ module PowerGPA
     end
 
     def connect
-      unless @url.start_with?('http://') || @url.start_with?('http://')
+      unless @url.start_with?('http://') || @url.start_with?('https://')
         @url = "http://#{@url}"
       end
 
