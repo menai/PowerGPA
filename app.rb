@@ -17,7 +17,10 @@ module PowerGPA
         @grades[name]['GPA'] = GPACalculator.new(grade_info).to_h
       end
 
-      erb :gpa
+    get '/about' do
+      erb :about
+    end
+
     end
   end
 end

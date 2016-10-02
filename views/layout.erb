@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <style>
+      html {
+        position: relative;
+        min-height: 100%;
+      }
+      body {
+        /* Margin bottom by footer height */
+      }
+      .footer {
+        position: absolute;
+        bottom: 0;
+        width: 99%;
+        /* Set the fixed height of the footer here */
+        background-color: #f5f5f5;
+      }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/bootstrap.min.css">
     <script src="/bootstrap.js"></script>
@@ -10,5 +26,17 @@
 
   <body>
     <%= yield %>
+    <footer class="footer">
+      <div class="row" style="margin-top:1%">
+        <div class="col-md-2 col-md-offset-3">
+          <a href="/about">About PowerGPA</a>
+          <br/>
+          <a href="https://github.com/menai/PowerGPA/issues/new">Issues</a>
+        </div>
+        <div class="col-md-2 col-md-offset-3">
+          &#169; Jon Moss and Nikolay Pomytkin 2016.
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
