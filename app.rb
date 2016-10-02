@@ -10,14 +10,14 @@ module PowerGPA
     end
 
     get '/gpa' do
-      grades = GradeFetcher.new(params).to_h
-      gpa = GPACalculator.new(grades).to_h
-
-      content_type :json
-      JSON.dump({
-        grades: grades,
-        gpa: gpa
-      })
+      @grades = GradeFetcher.new(params).to_h
+      @gpa = GPACalculator.new(@grades).to_h
+      erb :gpa
+      #content_type :json
+      #JSON.dump({
+      #  grades: grades,
+      #  gpa: gpa
+      #})
     end
   end
 end
