@@ -5,6 +5,8 @@ require_relative 'lib/gpa_calculator'
 
 module PowerGPA
   class Application < ::Sinatra::Base
+    set :show_exceptions, :after_handler
+
     get '/' do
       erb :index
     end
@@ -21,6 +23,14 @@ module PowerGPA
       erb :about
     end
 
+    end
+
+    error 404 do
+      redirect '/'
+    end
+
+    error 500 do
+      "Error! Something went wrong while trying to calculate your GPA. Please try again."
     end
   end
 end
