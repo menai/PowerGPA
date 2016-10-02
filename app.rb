@@ -9,7 +9,7 @@ module PowerGPA
       erb :index
     end
 
-    get '/gpa' do
+    post '/gpa' do
       @grades = GradeFetcher.new(params).to_h
       @gpa = GPACalculator.new(@grades).to_h
       erb :gpa
