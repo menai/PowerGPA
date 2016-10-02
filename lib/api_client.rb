@@ -45,8 +45,11 @@ module PowerGPA
         data = fetch['return']['studentDataVOs']
         courses = {}
         final_grades = {}
-
+        if data.is_a?(Hash)
+          data = [data]
+        end
         data.each do |d|
+          puts data.size
           d['sections'].each do |sect|
             courses[sect['schoolCourseTitle']] = sect['id']
           end
