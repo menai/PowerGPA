@@ -11,13 +11,13 @@ module PowerGPA
 
     post '/gpa' do
       @grades = GradeFetcher.new(params).to_h
-      @gpa = GPACalculator.new(@grades).to_h
+      @grades.each do |name, grade_info|
+        @grades[name] = {}
+        @grades[name]['grade_info'] = grade_info
+        @grades[name]['GPA'] = GPACalculator.new(grade_info).to_h
+      end
+
       erb :gpa
-      #content_type :json
-      #JSON.dump({
-      #  grades: grades,
-      #  gpa: gpa
-      #})
     end
   end
 end

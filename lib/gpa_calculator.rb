@@ -40,7 +40,7 @@ module PowerGPA
             grade + Rational(2, 3).to_f
           elsif course.end_with?(' Acc')
             grade + Rational(1, 3).to_f
-          elsif course.end_with?(' CPA')
+          else
             # no-op
             grade
           end

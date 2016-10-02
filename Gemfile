@@ -9,5 +9,6 @@ gem "savon", "~> 2.0"
 gem "httpclient", "~> 2.4.0"
 
 group :development do
+  gem "pry"
   gem "rake"
 end

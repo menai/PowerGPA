@@ -44,43 +44,41 @@ module PowerGPA
       def grades
         data = fetch['return']['studentDataVOs']
         courses = {}
-        final_grades = {}
+        terms = []
+
         if data.is_a?(Hash)
           data = [data]
         end
+
+        return_data = {}
+
         data.each do |d|
-          puts data.size
+          final_grades = {}
+
           d['sections'].each do |sect|
             courses[sect['schoolCourseTitle']] = sect['id']
           end
 
+          d['reportingTerms'].each do |term|
+            # check if start date has occurred already, and that the end date has *not* occurred already
+            if (Date.parse(term['startDate']) < Date.today) && (Date.parse(term['endDate']) > Date.today)
+              terms << term['id']
+            end
+          end
+
           d['finalGrades'].each do |grade|
-            if !grade['percent'].nil? && courses.values.include?(grade['sectionid']) && current_term_ids(d).include?(grade['reportingTermId']) && grade['percent'] != 0
+            if valid_grade?(grade, courses, terms)
               final_grades[courses.key(grade['sectionid'])] = grade['percent']
             end
           end
+
+          return_data[d['student']['firstName']] = final_grades
         end
 
-        final_grades
+        return_data
       end
 
       private
-
-      def current_term_ids(d)
-        @current_term_ids ||=
-          begin
-            terms = []
-
-            d['reportingTerms'].each do |term|
-              # check if start date has occurred already, and that the end date has *not* occurred already
-              if (Date.parse(term['startDate']) < Date.today) && (Date.parse(term['endDate']) > Date.today)
-                terms << term['id']
-              end
-            end
-
-            terms
-          end
-      end
 
       def fetch
         student_client = Savon.client(
@@ -106,6 +104,13 @@ module PowerGPA
 
         transcript = student_client.call(:get_student_data, message: transcript_params).to_xml
         JSON.parse(transcript)
+      end
+
+      def valid_grade?(grade, courses, terms)
+        !grade['percent'].nil? &&
+        courses.values.include?(grade['sectionid']) &&
+        terms.include?(grade['reportingTermId']) &&
+        grade['percent'] != 0
       end
     end
   end

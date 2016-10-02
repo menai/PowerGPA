@@ -1,19 +1,23 @@
 <div class="row" style="font-family: 'Muli', sans-serif; border-radius: 0 !important; -moz-border-radius: 0 !important; margin-top:3%">
-  <div class="col-md-4 col-md-offset-4">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 style="color: white; text-align: center;">PowerGPA</h3>
-      </div>
-      <ul class="list-group">
-        <% @grades.each do |name, grade|%>
-          <li class=list-group-item>
-            <h6><span class="label label-primary"><%= name %>:</span> <%= grade.round(3) %></h6>
-          </li>
-        <% end %>
-      </ul>
-      <div class="panel-footer">
-        <h4 style="color: #0a94ff; text-align: center;"> Your GPA: <b><%= @gpa.round(3) %></b></h4>
+  <% @col_size = 12 / @grades.size %>
+
+  <% @grades.each do |name, grade_info| %>
+    <div class="col-md-<%= @col_size %>">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 style="color: white; text-align: center;"><%= name %>'s PowerGPA</h3>
+        </div>
+        <ul class="list-group">
+          <% grade_info['grade_info'].each do |grade_name, grade_num|%>
+            <li class=list-group-item>
+              <h6><span class="label label-primary"><%= grade_name %>:</span> <%= grade_num.round(3) %></h6>
+            </li>
+          <% end %>
+        </ul>
+        <div class="panel-footer">
+          <h4 style="color: #0a94ff; text-align: center;"> Your GPA: <b><%= grade_info['GPA'].round(3) %></b></h4>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 </div>
