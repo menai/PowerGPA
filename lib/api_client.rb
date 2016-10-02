@@ -44,9 +44,6 @@ module PowerGPA
       def grades
         data = fetch['return']['studentDataVOs']
         courses = {}
-        # 1616 --> semester 1
-        # 1620 --> quater 1
-        term_ids = [1616, 1620]
         final_grades = {}
 
         data.each do |d|
@@ -55,7 +52,7 @@ module PowerGPA
           end
 
           d['finalGrades'].each do |grade|
-            if courses.values.include?(grade['sectionid']) && term_ids.include?(grade['reportingTermId']) && grade['percent'] != 0
+            if !grade['percent'].nil? && courses.values.include?(grade['sectionid']) && current_term_ids(d).include?(grade['reportingTermId']) && grade['percent'] != 0
               final_grades[courses.key(grade['sectionid'])] = grade['percent']
             end
           end
@@ -65,6 +62,22 @@ module PowerGPA
       end
 
       private
+
+      def current_term_ids(d)
+        @current_term_ids ||=
+          begin
+            terms = []
+
+            d['reportingTerms'].each do |term|
+              # check if start date has occurred already, and that the end date has *not* occurred already
+              if (Date.parse(term['startDate']) < Date.today) && (Date.parse(term['endDate']) > Date.today)
+                terms << term['id']
+              end
+            end
+
+            terms
+          end
+      end
 
       def fetch
         student_client = Savon.client(

@@ -46,6 +46,8 @@ module PowerGPA
           end
       end
 
+      @grades.reject! { |k, v| v.nil? }
+
       # add up the weighted numbers, and divide by the number of classes being taken
       grades_sum = @grades.values.inject(0) { |sum, x| sum + x }
 
