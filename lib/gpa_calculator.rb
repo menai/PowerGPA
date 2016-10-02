@@ -38,7 +38,7 @@ module PowerGPA
         @grades[course] =
           if course.start_with?('AP ')
             grade + Rational(2, 3).to_f
-          elsif course.end_with?(' Acc')
+          elsif course.include?('Acc')
             grade + Rational(1, 3).to_f
           else
             # no-op
