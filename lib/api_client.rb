@@ -48,8 +48,11 @@ module PowerGPA
         # 1620 --> quater 1
         term_ids = [1616, 1620]
         final_grades = {}
-
+        if data.is_a?(Hash)
+          data = [data]
+        end
         data.each do |d|
+          puts data.size
           d['sections'].each do |sect|
             courses[sect['schoolCourseTitle']] = sect['id']
           end
