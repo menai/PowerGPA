@@ -13,27 +13,46 @@
         position: absolute;
         bottom: 0;
         width: 99%;
+        max-width: 100%;
         /* Set the fixed height of the footer here */
+        height: 9%;
         background-color: #f5f5f5;
       }
     </style>
+    <!--  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/bootstrap.min.css">
     <script src="/bootstrap.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
     <title>PowerGPA</title>
+    <!-- Favicon Links -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/public/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/public/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/public/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/public/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/public/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/public/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/public/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/public/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/public/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
   </head>
 
   <body>
     <%= yield %>
-    <footer class="footer">
+    <footer class="footer" style="padding-bottom: 1em">
       <div class="row" style="margin-top:1%">
         <div class="col-md-2 col-md-offset-3">
           <a href="/about">About PowerGPA</a>
           <br/>
           <a href="https://github.com/menai/PowerGPA/issues/new">Issues</a>
         </div>
-        <div class="col-md-2 col-md-offset-3">
+        <div class="col-md-2 col-md-offset-3" style="padding-top: 0.8em;">
           &#169; Jon Moss and Nikolay Pomytkin 2016.
         </div>
       </div>

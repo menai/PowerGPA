@@ -19,10 +19,11 @@ module PowerGPA
         @grades[name]['GPA'] = GPACalculator.new(grade_info).to_h
       end
 
-    get '/about' do
-      erb :about
+      erb :gpa
     end
 
+    get '/about' do
+      erb :about
     end
 
     error 404 do
@@ -30,7 +31,8 @@ module PowerGPA
     end
 
     error 500 do
-      "Error! Something went wrong while trying to calculate your GPA. Please try again."
+      redirect '/'
     end
+
   end
 end
