@@ -60,8 +60,9 @@ module PowerGPA
           final_grades = {}
 
           d['sections'].each do |sect|
-            next unless valid_section?(sect)
-            courses[sect['schoolCourseTitle']] = sect['id']
+            if valid_section?(sect)
+              courses[sect['schoolCourseTitle']] = sect['id']
+            end
           end
 
           d['reportingTerms'].each do |term|
