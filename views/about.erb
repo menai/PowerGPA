@@ -1,0 +1,29 @@
+<script>
+  $('#myTabs a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+</script>
+
+<div class="row" style="margin-top: 4%;">
+  <div class="col-md-6 col-md-offset-3">
+    <!-- Nav tabs -->
+     <ul class="nav nav-tabs" role="tablist" style="width: 100%;">
+       <li role="presentation" class="active"><a href="#about" aria-controls="home" role="tab" data-toggle="tab"><h6>About PowerGPA</h6></a></li>
+       <li role="presentation"><a href="#creators" aria-controls="profile" role="tab" data-toggle="tab"><h6>The Creators</h6></a></li>
+       <li role="presentation"><a href="#contact" aria-controls="messages" role="tab" data-toggle="tab"><h6>Contact Us</h6></a></li>
+     </ul>
+     <!-- Tab content -->
+     <div class="tab-content">
+       <div role="tabpanel" class="tab-pane active" id="about">
+         ...
+       </div>
+       <div role="tabpanel" class="tab-pane" id="creators">
+         Jon Moss and Nikolay Pomytkin.
+       </div>
+       <div role="tabpanel" class="tab-pane" id="contact">
+         ...
+       </div>
+     </div>
+  </div>
+</div>
