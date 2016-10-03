@@ -1,8 +1,7 @@
 <div class="row" style="font-family: 'Muli', sans-serif; border-radius: 0 !important; -moz-border-radius: 0 !important; margin-top:3%">
   <% @col_size = 4 / @grades.size %>
-
   <% @grades.each do |name, grade_info| %>
-    <div class="col-md-<%= @col_size %> col-md-offset-3">
+    <div class="col-md-<%= @col_size %> col-md-offset-2">
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 style="color: white; text-align: center;"><%= name %>'s PowerGPA</h3>
@@ -20,4 +19,47 @@
       </div>
     </div>
   <% end %>
+  <div class="col-md-4" style="margin-left: 0%;">
+    <div class="list-group">
+      <div class="list-group-item">
+        <h6><span class="label label-primary">AP GPA Scaling:</h6>
+        <ul>
+          <li>A: 4.667</li>
+          <li>A-: 4.333</li>
+          <li>B+: 4.0</li>
+          <li>B: 3.667</li>
+          <li>B-: 3.333</li>
+        </ul>
+      </div>
+      <div class="list-group-item">
+        <h6><span class="label label-primary">Acc GPA Scaling:</h6>
+        <ul>
+          <li>A: 4.333</li>
+          <li>A-: 4.0</li>
+          <li>B+: 3.667</li>
+          <li>B: 3.333</li>
+          <li>B-: 3.0</li>
+        </ul>
+      </div>
+      <div class="list-group-item">
+        <h6><span class="label label-primary">CPA GPA Scaling:</h6>
+        <ul>
+          <li>A: 4.333</li>
+          <li>A-: 4.0</li>
+          <li>B+: 3.667</li>
+          <li>B: 3.0</li>
+          <li>B-: 2.667</li>
+        </ul>
+      </div>
+      <div class="list-group-item">
+        <h6><span class="label label-primary">CPB GPA Scaling:</h6>
+        <ul>
+          <li>A: 4.0</li>
+          <li>A-: 3.667</li>
+          <li>B+: 3.333</li>
+          <li>B: 3.0</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
