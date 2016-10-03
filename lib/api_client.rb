@@ -60,7 +60,13 @@ module PowerGPA
           final_grades = {}
 
           d['sections'].each do |sect|
+<<<<<<< HEAD
             courses[sect['schoolCourseTitle']] = sect['id']
+=======
+            if valid_section?(sect)
+              courses[sect['schoolCourseTitle']] = sect['id']
+            end
+>>>>>>> a3c34f29d70b6a3aefe041e236be6304370976cb
           end
 
           d['reportingTerms'].each do |term|
