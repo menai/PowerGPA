@@ -37,6 +37,11 @@ module PowerGPA
       erb :about
     end
 
+    get '/clear_credentials' do
+      request.session['powergpa.credentials'] = {}
+      redirect '/'
+    end
+
     error 404 do
       redirect '/'
     end
