@@ -18,7 +18,7 @@ module PowerGPA
         @grades[name]['grade_info'] = grade_info
         @grades[name]['GPA'] = GPACalculator.new(grade_info).to_h
       end
-
+      puts "jon moss"
       erb :gpa
     end
 
