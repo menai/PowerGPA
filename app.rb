@@ -12,11 +12,11 @@ module PowerGPA
     end
 
     post '/gpa' do
-      @grades = GradeFetcher.new(params).to_h
-      @grades.each do |name, grade_info|
-        @grades[name] = {}
-        @grades[name]['grade_info'] = grade_info
-        @grades[name]['GPA'] = GPACalculator.new(grade_info).to_h
+      @students = GradeFetcher.new(params).to_h
+      @students.each do |name, grade_info|
+        @students[name] = {}
+        @students[name]['grade_info'] = grade_info
+        @students[name]['GPA'] = GPACalculator.new(grade_info).to_h
       end
 
       erb :gpa
