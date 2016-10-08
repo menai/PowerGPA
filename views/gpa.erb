@@ -1,4 +1,4 @@
-<div class="row" style="font-family: 'Muli', sans-serif; border-radius: 0 !important; -moz-border-radius: 0 !important; margin-top:3%">
+<div class="row powergpa-row" style="font-family: 'Muli', sans-serif; border-radius: 0 !important; -moz-border-radius: 0 !important;">
   <% @col_size = 4 / @grades.size %>
   <% @grades.each do |name, grade_info| %>
     <div class="col-md-<%= @col_size %> col-md-offset-2">
@@ -19,6 +19,7 @@
       </div>
     </div>
   <% end %>
+
   <div class="col-md-4" style="margin-left: 0%;">
     <div class="list-group">
       <div class="list-group-item">
