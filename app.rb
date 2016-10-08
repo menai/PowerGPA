@@ -38,5 +38,11 @@ module PowerGPA
       request.session['powergpa.error'] = true
       redirect '/'
     end
+
+    private
+
+      def remember_me?
+        params['ps_remember'] == 'on'
+      end
   end
 end
