@@ -5,9 +5,13 @@ require_relative 'lib/gpa_calculator'
 
 module PowerGPA
   class Application < ::Sinatra::Base
+    enable :sessions
     set :show_exceptions, :after_handler
 
     get '/' do
+      @current_error = request.session['powergpa.error']
+      request.session['powergpa.error'] = nil
+
       erb :index
     end
 
@@ -31,8 +35,8 @@ module PowerGPA
     end
 
     error 500 do
+      request.session['powergpa.error'] = true
       redirect '/'
     end
-
   end
 end
