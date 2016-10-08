@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
 # Web stack
+gem 'activesupport'
 gem "rack", "~> 2"
 gem "sinatra", github: 'sinatra/sinatra'
 
