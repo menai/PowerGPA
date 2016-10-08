@@ -1,4 +1,6 @@
 require 'sinatra/base'
+require 'active_support'
+require 'active_support/message_encryptor'
 
 require_relative 'lib/grade_fetcher'
 require_relative 'lib/gpa_calculator'
@@ -16,6 +18,8 @@ module PowerGPA
     end
 
     post '/gpa' do
+      write_credentials if remember_me?
+
       @students = GradeFetcher.new(params).to_h
       @students.each do |name, grade_info|
         @students[name] = {}
@@ -41,8 +45,18 @@ module PowerGPA
 
     private
 
+      def encryptor
+        @encryptor ||= ActiveSupport::MessageEncryptor.new(self.class.session_secret)
+      end
+
       def remember_me?
         params['ps_remember'] == 'on'
+      end
+
+      def write_credentials
+        request.session['powergpa.credentials'] ||= {}
+        request.session['powergpa.credentials']['username'] = encryptor.encrypt_and_sign(params['ps_username'])
+        request.session['powergpa.credentials']['password'] = encryptor.encrypt_and_sign(params['ps_password'])
       end
   end
 end
