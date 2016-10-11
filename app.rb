@@ -1,32 +1,18 @@
 require 'sinatra/base'
-<<<<<<< HEAD
-require 'sinatra/cookies'
-=======
 require 'active_support'
 require 'active_support/message_encryptor'
->>>>>>> 94a9da7f1f8684e9de816cedf133bf4f3cc5b340
 
 require_relative 'lib/grade_fetcher'
 require_relative 'lib/gpa_calculator'
 
 module PowerGPA
   class Application < ::Sinatra::Base
-<<<<<<< HEAD
-    helpers Sinatra::Cookies
-=======
     enable :sessions
->>>>>>> 94a9da7f1f8684e9de816cedf133bf4f3cc5b340
     set :show_exceptions, :after_handler
-    @err = ""
+
     get '/' do
-<<<<<<< HEAD
-      @error = cookies[:error]
-      erb :index
-    end
-=======
       @current_error = request.session['powergpa.error']
       request.session['powergpa.error'] = nil
->>>>>>> 94a9da7f1f8684e9de816cedf133bf4f3cc5b340
 
       if @current_error
         erb :index
@@ -51,26 +37,18 @@ module PowerGPA
       erb :about
     end
 
-<<<<<<< HEAD
-
-=======
     get '/clear_credentials' do
       request.session['powergpa.credentials'] = {}
       redirect '/'
     end
->>>>>>> 94a9da7f1f8684e9de816cedf133bf4f3cc5b340
 
     error 404 do
       redirect '/'
     end
 
     error 500 do
-<<<<<<< HEAD
-      redirect '/error'
-=======
       request.session['powergpa.error'] = true
       redirect '/'
->>>>>>> 94a9da7f1f8684e9de816cedf133bf4f3cc5b340
     end
 
     private

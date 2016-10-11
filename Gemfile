@@ -4,7 +4,6 @@ source "https://rubygems.org"
 gem 'activesupport'
 gem "rack", "~> 2"
 gem "sinatra", github: 'sinatra/sinatra'
-gem 'sinatra-contrib'
 
 # PS API
 gem "savon", "~> 2.0"
