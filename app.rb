@@ -1,13 +1,16 @@
 require 'sinatra/base'
+require 'sinatra/cookies'
 
 require_relative 'lib/grade_fetcher'
 require_relative 'lib/gpa_calculator'
 
 module PowerGPA
   class Application < ::Sinatra::Base
+    helpers Sinatra::Cookies
     set :show_exceptions, :after_handler
-
+    @err = ""
     get '/' do
+      @error = cookies[:error]
       erb :index
     end
 
@@ -26,12 +29,14 @@ module PowerGPA
       erb :about
     end
 
+
+
     error 404 do
       redirect '/'
     end
 
     error 500 do
-      redirect '/'
+      redirect '/error'
     end
 
   end

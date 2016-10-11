@@ -8,7 +8,11 @@
         <b>DISCLAIMER:</b> We forward your login information directly to PowerSchool and do not store it on our servers. Your grades are only accessed through PowerSchool's opensource API,
         a non-intrusive way to calculate your GPA.
       </li>
-
+      <% if @error.nil? %>
+        <li class="list-group-item">
+          <%= @error %>
+        </li>
+      <% end %>
     <form class="form-horizontal" role="form" id="submit" action="/gpa" method="post">
       <li class="list-group-item">
         <div class="row">

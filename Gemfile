@@ -3,6 +3,7 @@ source "https://rubygems.org"
 # Web stack
 gem "rack", "~> 2"
 gem "sinatra", github: 'sinatra/sinatra'
+gem 'sinatra-contrib'
 
 # PS API
 gem "savon", "~> 2.0"
