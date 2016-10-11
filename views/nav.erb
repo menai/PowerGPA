@@ -1,0 +1,30 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">PowerGPA</a>
+    </div>
+
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+
+        <% if stored_credentials? %>
+          <li><a href="/clear_credentials">Log out</a></li>
+        <% end %>
+
+        <li><a href="/about">About</a></li>
+        <li><a href="https://github.com/menai/PowerGPA/issues/new">Report a bug</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="">&#169; 2016 Jon Moss and Nikolay Pomytkin</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>

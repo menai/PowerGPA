@@ -1,24 +1,32 @@
-<div class="row" style="font-family: 'Muli', sans-serif; border-radius: 0 !important; -moz-border-radius: 0 !important; margin-top:3%">
-  <% @col_size = 4 / @grades.size %>
-  <% @grades.each do |name, grade_info| %>
-    <div class="col-md-<%= @col_size %> col-md-offset-2">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 style="color: white; text-align: center;"><%= name %>'s PowerGPA</h3>
+<div class="row powergpa-row" style="font-family: 'Muli', sans-serif; border-radius: 0 !important; -moz-border-radius: 0 !important;">
+  <div class="col-md-7 col-md-offset-1">
+    <div class="row">
+      <% @col_size = 12 / @students.size %>
+
+      <% @students.each do |name, grades| %>
+        <div class="col-md-<%= @col_size %>">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 style="color: white; text-align: center;"><%= name %>'s PowerGPA</h3>
+            </div>
+
+            <ul class="list-group">
+              <% grades['grade_info'].each do |grade_name, grade_num|%>
+                <li class=list-group-item>
+                  <h5><div style="font-size:70%;"><span class="label label-primary"><%= grade_name %>:</span> <%= grade_num.round(3) %></div></h5>
+                </li>
+              <% end %>
+            </ul>
+
+            <div class="panel-footer">
+              <h4 style="color: #0a94ff; text-align: center;"> Your GPA: <b><%= grades['GPA'].round(3) %></b></h4>
+            </div>
+          </div>
         </div>
-        <ul class="list-group">
-          <% grade_info['grade_info'].each do |grade_name, grade_num|%>
-            <li class=list-group-item>
-              <h5><div style="font-size:70%;"><span class="label label-primary"><%= grade_name %>:</span> <%= grade_num.round(3) %></div></h5>
-            </li>
-          <% end %>
-        </ul>
-        <div class="panel-footer">
-          <h4 style="color: #0a94ff; text-align: center;"> Your GPA: <b><%= grade_info['GPA'].round(3) %></b></h4>
-        </div>
-      </div>
+      <% end %>
     </div>
-  <% end %>
+  </div>
+
   <div class="col-md-4" style="margin-left: 0%;">
     <div class="list-group">
       <div class="list-group-item">
