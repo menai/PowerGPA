@@ -7,19 +7,19 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">PowerGPA</a>
+      <a class="navbar-brand" style="padding: 0 0 0 0;" href="/">
+        <img alt="PowerGPA" src="/images/logo.png" style="padding-top: 0px; padding-bottom: 10px; height: 14vh; width: 13vh;">
+      </a>
     </div>
 
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li><a href="/">Home</a></li>
-
+        <li><a href="/about">About</a></li>
+        <li><a href="https://github.com/menai/PowerGPA/issues/new">Report a bug</a></li>
         <% if stored_credentials? %>
           <li><a href="/clear_credentials">Log out</a></li>
         <% end %>
-
-        <li><a href="/about">About</a></li>
-        <li><a href="https://github.com/menai/PowerGPA/issues/new">Report a bug</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
