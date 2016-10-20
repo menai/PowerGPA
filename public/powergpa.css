@@ -9,3 +9,42 @@ html {
 body {
   /* Margin bottom by footer height */
 }
+.nav-logo{
+  padding: 0 0 0 0;
+}
+@media(max-width:767px){
+  .logo-brand{
+    height: 16vh;
+    width: 15vh;
+  }
+  .nav-logo{
+    margin-bottom: 3vh;
+  }
+}
+@media(min-width:768px){
+  .logo-brand{
+    height: 15vh;
+    width: 14vh;
+  }
+  .nav-logo{
+    margin-bottom: 3vh;
+  }
+}
+@media(min-width:992px){
+  .logo-brand{
+    height: 13vh;
+    width: 12vh;
+  }
+  .nav-logo{
+    margin-bottom: 4vh;
+  }
+}
+@media(min-width:1200px){
+  .logo-brand{
+    height: 11vh;
+    width: 10vh;
+  }
+  .nav-logo{
+    margin-bottom: 2.5vh;
+  }
+}
