@@ -1,10 +1,13 @@
 source "https://rubygems.org"
 
+# Metrics / monitoring
+gem 'librato-rack'
+gem 'rollbar'
+
 # Web stack
 gem 'activesupport'
 gem 'puma'
 gem "rack", "~> 2"
-gem 'rollbar'
 gem "sinatra", github: 'sinatra/sinatra'
 
 # PS API
