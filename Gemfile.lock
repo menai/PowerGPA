@@ -46,6 +46,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    puma (3.6.0)
     rack (2.0.1)
     rake (11.2.2)
     savon (2.11.1)
@@ -75,6 +76,7 @@ DEPENDENCIES
   foreman
   httpclient (~> 2.4.0)
   pry
+  puma
   rack (~> 2)
   rake
   savon (~> 2.0)
