@@ -4,6 +4,7 @@ source "https://rubygems.org"
 gem 'activesupport'
 gem 'puma'
 gem "rack", "~> 2"
+gem 'rollbar'
 gem "sinatra", github: 'sinatra/sinatra'
 
 # PS API
