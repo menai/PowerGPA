@@ -4,6 +4,7 @@ require 'active_support/message_encryptor'
 
 require_relative 'lib/grade_fetcher'
 require_relative 'lib/gpa_calculator'
+require_relative 'lib/rollbar_reporter'
 
 module PowerGPA
   class Application < ::Sinatra::Base
@@ -51,6 +52,7 @@ module PowerGPA
     end
 
     error 500 do
+      RollbarReporter.call(env)
       request.session['powergpa.error'] = true
       redirect '/'
     end
