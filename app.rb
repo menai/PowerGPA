@@ -7,7 +7,9 @@ require_relative 'lib/gpa_calculator'
 
 module PowerGPA
   class Application < ::Sinatra::Base
+    enable :logging
     enable :sessions
+    set :session_secret, ENV['SESSION_SECRET']
     set :show_exceptions, :after_handler
 
     get '/' do
