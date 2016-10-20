@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'active_support'
 require 'active_support/message_encryptor'
+require 'librato-rack'
 
 require_relative 'lib/grade_fetcher'
 require_relative 'lib/gpa_calculator'
@@ -62,12 +63,16 @@ module PowerGPA
         write_credentials if remember_me?
         params.merge!(read_credentials(true)) if stored_credentials?
 
-        @students = GradeFetcher.new(params).to_h
-        @students.each do |name, grade_info|
-          @students[name] = {}
-          @students[name]['grade_info'] = grade_info
-          @students[name]['GPA'] = GPACalculator.new(grade_info).to_h
+        Librato.timing 'gpa.calculate.time' do
+          @students = GradeFetcher.new(params).to_h
+          @students.each do |name, grade_info|
+            @students[name] = {}
+            @students[name]['grade_info'] = grade_info
+            @students[name]['GPA'] = GPACalculator.new(grade_info).to_h
+          end
         end
+
+        Librato.increment 'gpa.calculate.count'
 
         erb :gpa
       end
