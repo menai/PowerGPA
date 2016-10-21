@@ -14,6 +14,9 @@ gem "sinatra", github: 'sinatra/sinatra'
 gem "savon", "~> 2.0"
 gem "httpclient", "~> 2.4.0"
 
+# Util
+gem 'fast_blank'
+
 group :development do
   gem "foreman"
   gem "pry"
