@@ -53,8 +53,13 @@ module PowerGPA
     end
 
     error 500 do
-      RollbarReporter.call(env)
-      request.session['powergpa.error'] = true
+      if $!.class == APIClient::IncorrectCredentialsError
+        request.session['powergpa.error'] = :invalid_credentials
+      else
+        RollbarReporter.call(env)
+        request.session['powergpa.error'] = :unknown
+      end
+
       redirect '/'
     end
 

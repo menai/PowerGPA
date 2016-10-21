@@ -3,6 +3,9 @@ require 'json'
 
 module PowerGPA
   class APIClient
+    class IncorrectCredentialsError < StandardError
+    end
+
     attr_reader :type
 
     def initialize(url, username, password, type)
@@ -26,9 +29,13 @@ module PowerGPA
       )
 
       login = client.call(:login, message: { username: @username, password: @password, userType: @type } )
-      session = login.body[:login_response][:return][:user_session_vo]
 
-      @driver = Student.new(self, @url, session)
+      if bad_credentials?(login)
+        raise IncorrectCredentialsError
+      else
+        session = login.body[:login_response][:return][:user_session_vo]
+        @driver = Student.new(self, @url, session)
+      end
     end
 
     def grades
@@ -37,6 +44,10 @@ module PowerGPA
     end
 
     private
+
+    def bad_credentials?(login)
+      login.body[:login_response][:return][:message_v_os][:title] == 'Invalid Login'
+    end
 
     class Student
       def initialize(client, url, session)
