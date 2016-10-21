@@ -38,6 +38,9 @@ body {
   .nav-logo{
     margin-bottom: 4vh;
   }
+  .gpa-chart{
+    margin-left: 0%;
+  }
 }
 @media(min-width:1200px){
   .logo-brand{
@@ -46,5 +49,8 @@ body {
   }
   .nav-logo{
     margin-bottom: 2.5vh;
+  }
+  .gpa-chart{
+    margin-left: 0%;
   }
 }
