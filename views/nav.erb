@@ -19,6 +19,8 @@
         <li><a href="https://github.com/menai/PowerGPA/issues/new">Report a bug</a></li>
         <% if stored_credentials? %>
           <li><a href="/clear_credentials">Log out</a></li>
+        <% elsif request.path == '/gpa' %>
+          <li><a href="/">Log out</a></li>
         <% end %>
       </ul>
 
