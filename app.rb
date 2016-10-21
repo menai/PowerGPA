@@ -62,6 +62,7 @@ module PowerGPA
       def calculate_gpa_and_return
         write_credentials if remember_me?
         params.merge!(read_credentials(true)) if stored_credentials?
+        params.merge!({ ps_url: 'ps2.millburn.org' }) if params[:ps_url].blank?
 
         Librato.timing 'gpa.calculate.time' do
           @students = GradeFetcher.new(params).to_h
