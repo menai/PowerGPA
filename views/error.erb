@@ -1,0 +1,14 @@
+<div class="alert alert-dismissible alert-info">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Whoops!</strong>
+
+  <% if @current_error == :unknown %>
+    An error ocurred while we were trying to calculate your GPA.
+      Double check that you typed your information into the form,
+      and then try submitting again.
+  <% elsif @current_error == :invalid_credentials %>
+    Looks like you typed in a wrong username or password.
+      Double check that you typed in your credentials correctly, and then try
+      submitting again.
+  <% end %>
+</div>
