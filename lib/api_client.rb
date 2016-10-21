@@ -46,7 +46,9 @@ module PowerGPA
     private
 
     def bad_credentials?(login)
-      login.body[:login_response][:return][:message_v_os][:title] == 'Invalid Login'
+      login.body[:login_response][:return] &&
+        login.body[:login_response][:return][:message_v_os] &&
+        login.body[:login_response][:return][:message_v_os][:title] == 'Invalid Login'
     end
 
     class Student
