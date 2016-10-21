@@ -1,10 +1,10 @@
 require 'sinatra/base'
 require 'active_support'
 require 'active_support/message_encryptor'
-require 'librato-rack'
 
 require_relative 'lib/grade_fetcher'
 require_relative 'lib/gpa_calculator'
+require_relative 'lib/metrics_sender'
 require_relative 'lib/rollbar_reporter'
 
 module PowerGPA
