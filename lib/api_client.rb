@@ -109,6 +109,8 @@ module PowerGPA
             end
           end
 
+          next unless d['finalGrades']
+
           d['finalGrades'].each do |grade|
             if valid_grade?(grade, courses, terms)
               final_grades[courses.key(grade['sectionid'])] = grade['percent']
