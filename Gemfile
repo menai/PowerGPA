@@ -22,3 +22,11 @@ group :development do
   gem "pry"
   gem "rake"
 end
+
+group :development, :test do
+  gem 'rspec'
+end
+
+group :test do
+  gem 'rack-test'
+end
