@@ -12,8 +12,8 @@ module PowerGPA
     enable :logging
     enable :sessions
     set :show_exceptions, :after_handler
-    set :public_folder, File.expand_path("../public/", File.dirname(__FILE__))
-    set :views, File.expand_path("../views/", File.dirname(__FILE__))
+    set :public_folder, File.expand_path("../../public/", File.dirname(__FILE__))
+    set :views, File.expand_path("../../views/", File.dirname(__FILE__))
 
     configure :production do
       set :session_secret, ENV['SESSION_SECRET']
