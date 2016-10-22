@@ -1,9 +1,13 @@
 require 'savon'
 require 'json'
+require 'uri'
 
 module PowerGPA
   class APIClient
     class IncorrectCredentialsError < StandardError
+    end
+
+    class InvalidURLError < StandardError
     end
 
     attr_reader :type
@@ -19,6 +23,8 @@ module PowerGPA
       unless @url.start_with?('http://') || @url.start_with?('https://')
         @url = "http://#{@url}"
       end
+
+      raise InvalidURLError unless valid_url?(@url)
 
       soap_endpoint = @url + "/pearson-rest/services/PublicPortalService"
 
@@ -49,6 +55,17 @@ module PowerGPA
       login.body[:login_response][:return] &&
         login.body[:login_response][:return][:message_v_os] &&
         login.body[:login_response][:return][:message_v_os][:title] == 'Invalid Login'
+    end
+
+    def valid_url?(url)
+      url = URI.parse(url).host
+
+      begin
+        Socket.gethostbyname(url)
+        true
+      rescue SocketError
+        false
+      end
     end
 
     class Student
