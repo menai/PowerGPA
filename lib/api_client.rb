@@ -1,6 +1,7 @@
 require 'savon'
 require 'json'
 require 'uri'
+require_relative 'rollbar_reporter'
 
 module PowerGPA
   class APIClient
@@ -27,6 +28,8 @@ module PowerGPA
       raise InvalidURLError unless valid_url?(@url)
 
       soap_endpoint = @url + "/pearson-rest/services/PublicPortalService"
+
+      RollbarReporter.scope!({ soap_endpoint: soap_endpoint })
 
       client = Savon.client(
         endpoint: soap_endpoint,

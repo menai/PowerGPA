@@ -10,7 +10,7 @@ end
 
 # Declare protected fields which contain user senstivie information...
 
-protected_fields = [:ps_domain, :ps_type, :ps_url, :ps_username, :ps_password]
+protected_fields = [:ps_type, :ps_username, :ps_password]
 Rollbar.configuration.scrub_headers |= protected_fields
 Rollbar.configuration.scrub_fields |= protected_fields
 
@@ -31,6 +31,10 @@ module PowerGPA
     def self.call(env)
       request_data = RequestDataExtractor.new.from_rack(env)
       Rollbar.error(env['sinatra.error'], request_data)
+    end
+
+    def self.scope!(options)
+      Rollbar.scope!(options)
     end
   end
 end
