@@ -4,7 +4,7 @@ require 'uri'
 
 module PowerGPA
   class APIClient
-    class IncorrectCredentialsError < StandardError
+    class InvalidCredentialsError < StandardError
     end
 
     class InvalidURLError < StandardError
@@ -37,7 +37,7 @@ module PowerGPA
       login = client.call(:login, message: { username: @username, password: @password, userType: @type } )
 
       if bad_credentials?(login)
-        raise IncorrectCredentialsError
+        raise InvalidCredentialsError
       else
         session = login.body[:login_response][:return][:user_session_vo]
         @driver = Student.new(self, @url, session)
