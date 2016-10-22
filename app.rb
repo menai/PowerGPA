@@ -55,6 +55,8 @@ module PowerGPA
     error 500 do
       if $!.class == APIClient::IncorrectCredentialsError
         request.session['powergpa.error'] = :invalid_credentials
+      elsif $!.class == APIClient::InvalidURLError
+        request.session['powergpa.error'] = :invalid_url
       else
         RollbarReporter.call(env)
         request.session['powergpa.error'] = :unknown

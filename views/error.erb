@@ -10,5 +10,8 @@
     Looks like you typed in a wrong username or password.
       Double check that you typed in your credentials correctly, and then try
       submitting again.
+  <% elsif @current_error == :invalid_url %>
+    Looks like you typed in a wrong Power School domain. Please note that "ps2.millburn.org"
+      is the default when the domain is left empty.
   <% end %>
 </div>
