@@ -2,4 +2,4 @@
 require 'rspec'
 require 'rack/test'
 
-require_relative '../app.rb'
+require_relative '../lib/power_gpa'

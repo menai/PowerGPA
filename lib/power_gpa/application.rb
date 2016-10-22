@@ -2,16 +2,19 @@ require 'sinatra/base'
 require 'active_support'
 require 'active_support/message_encryptor'
 
-require_relative 'lib/grade_fetcher'
-require_relative 'lib/gpa_calculator'
-require_relative 'lib/metrics_sender'
-require_relative 'lib/rollbar_reporter'
+require_relative 'grade_fetcher'
+require_relative 'gpa_calculator'
+require_relative 'metrics_sender'
+require_relative 'rollbar_reporter'
 
 module PowerGPA
   class Application < ::Sinatra::Base
     enable :logging
     enable :sessions
     set :show_exceptions, :after_handler
+    set :public_folder, File.expand_path("../../public/", File.dirname(__FILE__))
+    set :views, File.expand_path("../../views/", File.dirname(__FILE__))
+
     configure :production do
       set :session_secret, ENV['SESSION_SECRET']
     end
