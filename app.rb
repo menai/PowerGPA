@@ -53,7 +53,7 @@ module PowerGPA
     end
 
     error 500 do
-      if $!.class == APIClient::IncorrectCredentialsError
+      if $!.class == APIClient::InvalidCredentialsError
         request.session['powergpa.error'] = :invalid_credentials
       elsif $!.class == APIClient::InvalidURLError
         request.session['powergpa.error'] = :invalid_url
