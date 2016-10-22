@@ -86,6 +86,13 @@ module PowerGPA
 
         return_data = {}
 
+        if data.nil?
+          puts "===="
+          puts "DATA: #{data}"
+          puts "RES: #{fetch['return']}"
+          puts "===="
+        end
+
         data.each do |d|
           final_grades = {}
 
