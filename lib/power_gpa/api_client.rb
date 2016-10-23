@@ -1,7 +1,7 @@
 require 'savon'
 require 'json'
 require 'uri'
-require_relative 'rollbar_reporter'
+require 'power_gpa/rollbar_reporter'
 
 module PowerGPA
   class APIClient

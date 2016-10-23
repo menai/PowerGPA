@@ -1,4 +1,4 @@
-require_relative 'api_client'
+require 'power_gpa/api_client'
 
 module PowerGPA
   class GradeFetcher

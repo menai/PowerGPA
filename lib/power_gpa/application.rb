@@ -2,10 +2,10 @@ require 'sinatra/base'
 require 'active_support'
 require 'active_support/message_encryptor'
 
-require_relative 'grade_fetcher'
-require_relative 'gpa_calculator'
-require_relative 'metrics_sender'
-require_relative 'rollbar_reporter'
+require 'power_gpa/grade_fetcher'
+require 'power_gpa/gpa_calculator'
+require 'power_gpa/metrics_sender'
+require 'power_gpa/rollbar_reporter'
 
 module PowerGPA
   class Application < ::Sinatra::Base
