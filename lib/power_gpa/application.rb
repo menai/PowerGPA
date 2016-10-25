@@ -83,6 +83,10 @@ module PowerGPA
           end
         end
 
+        @students.reject! do |name, info|
+          info['grade_info'].empty?
+        end
+
         Librato.increment 'gpa.calculate.count'
 
         erb :gpa
