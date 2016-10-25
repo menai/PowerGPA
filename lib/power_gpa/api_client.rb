@@ -120,7 +120,10 @@ module PowerGPA
             end
           end
 
-          return_data[d['student']['firstName']] = final_grades
+          return_data[d['student']['firstName']] ||= {}
+          return_data[d['student']['firstName']][d['student']['gradeLevel']] = final_grades
+
+          #return_data[d['student']['firstName']] = final_grades
         end
 
         return_data
