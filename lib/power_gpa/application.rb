@@ -75,12 +75,20 @@ module PowerGPA
         params.merge!({ ps_url: 'ps2.millburn.org' }) if params[:ps_url].blank?
 
         Librato.timing 'gpa.calculate.time' do
+          return_data = {}
+
           @students = GradeFetcher.new(params).to_h
-          @students.each do |name, grade_info|
-            @students[name] = {}
-            @students[name]['grade_info'] = grade_info
-            @students[name]['GPA'] = GPACalculator.new(grade_info).to_h
+          @students.each do |name, years|
+            return_data[name] = {}
+
+            years.each do |year_num, year_data|
+              return_data[name][year_num] ||= {}
+              return_data[name][year_num]['grade_info'] = year_data
+              return_data[name][year_num]['GPA'] = GPACalculator.new(year_data).to_h
+            end
           end
+
+          @students = return_data
         end
 
         @students.reject! do |name, info|
