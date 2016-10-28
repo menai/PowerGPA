@@ -37,7 +37,12 @@ module PowerGPA
         wsse_auth: ["pearson", "pearson"]
       )
 
-      login = client.call(:login, message: { username: @username, password: @password, userType: @type } )
+      begin
+        login = client.call(:login, message: { username: @username, password: @password, userType: @type } )
+      rescue Savon::SOAPFault => e
+        RollbarReporter.scope!({ soap_error_hash: e.to_hash })
+        raise e
+      end
 
       if bad_credentials?(login)
         raise InvalidCredentialsError
