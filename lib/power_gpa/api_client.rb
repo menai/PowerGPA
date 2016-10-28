@@ -173,8 +173,8 @@ module PowerGPA
       def valid_section?(section)
         course_name = section['schoolCourseTitle']
 
-        ACC_COURSE_WHITELIST[course_name] ||
-          AP_COURSE_WHITELIST[course_name] ||
+        AP_COURSE_WHITELIST[course_name] ||
+          ACC_COURSE_WHITELIST[course_name] ||
           ['AP', 'Acc', 'CPA', 'CPB'].any? do |name|
             course_name.include?(name)
           end
