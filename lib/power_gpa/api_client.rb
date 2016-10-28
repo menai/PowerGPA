@@ -110,7 +110,7 @@ module PowerGPA
 
           d['sections'].each do |sect|
             if valid_section?(sect)
-              courses[sect['schoolCourseTitle']] = sect['id']
+              courses[section_title(sect)] = sect['id']
             end
           end
 
@@ -161,6 +161,14 @@ module PowerGPA
 
         transcript = student_client.call(:get_student_data, message: transcript_params).to_xml
         JSON.parse(transcript)
+      end
+
+      def section_title(section)
+        course_name = section['schoolCourseTitle']
+
+        AP_COURSE_WHITELIST[course_name] ||
+          ACC_COURSE_WHITELIST[course_name] ||
+          course_name
       end
 
       def valid_grade?(grade, courses, terms)
