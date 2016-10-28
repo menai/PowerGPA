@@ -61,6 +61,8 @@ module PowerGPA
       end
 
       def final_grades(data)
+        next unless data['finalGrades']
+
         courses = {}
         terms = []
         final_grades = {}
@@ -77,8 +79,6 @@ module PowerGPA
             terms << term['id']
           end
         end
-
-        next unless data['finalGrades']
 
         data['finalGrades'].each do |grade|
           if valid_grade?(grade, courses, terms)
