@@ -26,7 +26,8 @@ module PowerGPA
         return_data = {}
 
         data.each do |d|
-          return_data[d['student']['firstName']] = final_grades(data)
+          next unless d['finalGrades']
+          return_data[d['student']['firstName']] = final_grades(d)
         end
 
         return_data
@@ -61,8 +62,6 @@ module PowerGPA
       end
 
       def final_grades(data)
-        next unless data['finalGrades']
-
         courses = {}
         terms = []
         final_grades = {}
