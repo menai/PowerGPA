@@ -72,6 +72,15 @@ module PowerGPA
     end
 
     class Student
+      ACC_COURSE_WHITELIST = {
+        'Science Research 1' => 'Science Research 1 Acc'
+      }
+
+      AP_COURSE_WHITELIST = {
+        'Science Research 2' => 'AP Science Research 2',
+        'Science Research 3' => 'AP Science Research 3'
+      }
+
       def initialize(client, url, session)
         @client = client
         @url = url
@@ -162,9 +171,13 @@ module PowerGPA
       end
 
       def valid_section?(section)
-        ['AP', 'Acc', 'CPA', 'CPB'].any? do |name|
-          section['schoolCourseTitle'].include?(name)
-        end
+        course_name = section['schoolCourseTitle']
+
+        ACC_COURSE_WHITELIST[course_name] ||
+          AP_COURSE_WHITELIST[course_name] ||
+          ['AP', 'Acc', 'CPA', 'CPB'].any? do |name|
+            course_name.include?(name)
+          end
       end
     end
   end
