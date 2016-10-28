@@ -18,8 +18,6 @@ module PowerGPA
 
       def grades
         data = fetch['return']['studentDataVOs']
-        courses = {}
-        terms = []
 
         if data.is_a?(Hash)
           data = [data]
@@ -28,30 +26,7 @@ module PowerGPA
         return_data = {}
 
         data.each do |d|
-          final_grades = {}
-
-          d['sections'].each do |sect|
-            if valid_section?(sect)
-              courses[section_title(sect)] = sect['id']
-            end
-          end
-
-          d['reportingTerms'].each do |term|
-            # check if start date has occurred already, and that the end date has *not* occurred already
-            if (Date.parse(term['startDate']) < Date.today) && (Date.parse(term['endDate']) > Date.today)
-              terms << term['id']
-            end
-          end
-
-          next unless d['finalGrades']
-
-          d['finalGrades'].each do |grade|
-            if valid_grade?(grade, courses, terms)
-              final_grades[courses.key(grade['sectionid'])] = grade['percent']
-            end
-          end
-
-          return_data[d['student']['firstName']] = final_grades
+          return_data[d['student']['firstName']] = final_grades(data)
         end
 
         return_data
@@ -83,6 +58,35 @@ module PowerGPA
 
         transcript = student_client.call(:get_student_data, message: transcript_params).to_xml
         JSON.parse(transcript)
+      end
+
+      def final_grades(data)
+        courses = {}
+        terms = []
+        final_grades = {}
+
+        data['sections'].each do |sect|
+          if valid_section?(sect)
+            courses[section_title(sect)] = sect['id']
+          end
+        end
+
+        data['reportingTerms'].each do |term|
+          # check if start date has occurred already, and that the end date has *not* occurred already
+          if (Date.parse(term['startDate']) < Date.today) && (Date.parse(term['endDate']) > Date.today)
+            terms << term['id']
+          end
+        end
+
+        next unless data['finalGrades']
+
+        data['finalGrades'].each do |grade|
+          if valid_grade?(grade, courses, terms)
+            final_grades[courses.key(grade['sectionid'])] = grade['percent']
+          end
+        end
+
+        final_grades
       end
 
       def section_title(section)
