@@ -72,6 +72,15 @@ module PowerGPA
     end
 
     class Student
+      ACC_COURSE_WHITELIST = {
+        'Science Research 1' => 'Science Research 1 Acc'
+      }
+
+      AP_COURSE_WHITELIST = {
+        'Science Research 2' => 'AP Science Research 2',
+        'Science Research 3' => 'AP Science Research 3'
+      }
+
       def initialize(client, url, session)
         @client = client
         @url = url
@@ -101,7 +110,7 @@ module PowerGPA
 
           d['sections'].each do |sect|
             if valid_section?(sect)
-              courses[sect['schoolCourseTitle']] = sect['id']
+              courses[section_title(sect)] = sect['id']
             end
           end
 
@@ -154,6 +163,14 @@ module PowerGPA
         JSON.parse(transcript)
       end
 
+      def section_title(section)
+        course_name = section['schoolCourseTitle']
+
+        AP_COURSE_WHITELIST[course_name] ||
+          ACC_COURSE_WHITELIST[course_name] ||
+          course_name
+      end
+
       def valid_grade?(grade, courses, terms)
         !grade['percent'].nil? &&
         courses.values.include?(grade['sectionid']) &&
@@ -162,9 +179,13 @@ module PowerGPA
       end
 
       def valid_section?(section)
-        ['AP', 'Acc', 'CPA', 'CPB'].any? do |name|
-          section['schoolCourseTitle'].include?(name)
-        end
+        course_name = section['schoolCourseTitle']
+
+        AP_COURSE_WHITELIST[course_name] ||
+          ACC_COURSE_WHITELIST[course_name] ||
+          ['AP', 'Acc', 'CPA', 'CPB'].any? do |name|
+            course_name.include?(name)
+          end
       end
     end
   end
