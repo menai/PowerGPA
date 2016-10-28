@@ -16,7 +16,7 @@ module PowerGPA
       if @params[:ps_username] == 'fakestudent123'
         FakeStudentGradeFetcher.grades
       else
-        api = APIClient.new(@params[:ps_url].strip.downcase, @params[:ps_username], @params[:ps_password], @params[:ps_type])
+        api = APIClient.new(@params[:ps_url].strip.downcase, @params[:ps_username], @params[:ps_password], @params[:ps_type].to_s)
         api.connect
         api.grades
       end

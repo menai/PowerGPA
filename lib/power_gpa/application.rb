@@ -70,9 +70,7 @@ module PowerGPA
 
     private
       def calculate_gpa_and_return
-        write_credentials if remember_me?
-        params.merge!(read_credentials(true)) if stored_credentials?
-        params.merge!({ ps_url: 'ps2.millburn.org' }) if params[:ps_url].blank?
+        process_parameters
 
         Librato.timing 'gpa.calculate.time' do
           @students = GradeFetcher.new(params).to_h
@@ -96,7 +94,13 @@ module PowerGPA
         @encryptor ||= ActiveSupport::MessageEncryptor.new(self.class.session_secret)
       end
 
-      def read_credentials(decrypt = false)
+      def process_parameters
+        write_credentials if remember_me?
+        params.merge!(read_credentials(decrypt: true)) if stored_credentials?
+        params.merge!({ ps_url: 'ps2.millburn.org' }) if params[:ps_url].blank?
+      end
+
+      def read_credentials(decrypt: false)
         return_value = {}
 
         if decrypt
