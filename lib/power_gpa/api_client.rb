@@ -2,7 +2,7 @@ require 'savon'
 require 'json'
 require 'uri'
 require 'power_gpa/rollbar_reporter'
-require 'power_gpa/api_client/student'
+require 'power_gpa/api_client/student_data_fetcher'
 
 module PowerGPA
   class APIClient
@@ -49,13 +49,13 @@ module PowerGPA
         raise InvalidCredentialsError
       else
         session = login.body[:login_response][:return][:user_session_vo]
-        @driver = Student.new(self, @url, session)
+        @driver = StudentDataFetcher.new(self, @url, session)
       end
     end
 
-    def grades
+    def students
       connect unless @driver
-      @driver.grades
+      @driver.call
     end
 
     private
