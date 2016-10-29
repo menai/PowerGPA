@@ -4,4 +4,5 @@ module PowerGPA
   autoload :GPACalculator,   'power_gpa/gpa_calculator'
   autoload :MetricsSender,   'power_gpa/metrics_sender'
   autoload :RollbarReporter, 'power_gpa/rollbar_reporter'
+  autoload :Student,         'power_gpa/student'
 end

@@ -1,6 +1,6 @@
 module PowerGPA
   class APIClient
-    class Student
+    class StudentDataFetcher
       ACC_COURSE_WHITELIST = {
         'Science Research 1' => 'Science Research 1 Acc'
       }
@@ -16,21 +16,25 @@ module PowerGPA
         @session = session
       end
 
-      def grades
+      def call
+        students = []
         data = fetch['return']['studentDataVOs']
 
         if data.is_a?(Hash)
           data = [data]
         end
 
-        return_data = {}
-
         data.each do |d|
           next unless d['finalGrades']
-          return_data[d['student']['firstName']] = final_grades(d)
+
+          name = d['student']['firstName']
+          grades = final_grades(d)
+          next if grades.empty?
+
+          students.push(Student.new(name, grades))
         end
 
-        return_data
+        students
       end
 
       private

@@ -3,15 +3,15 @@
     <div class="row">
       <% @col_size = 12 / @students.size %>
 
-      <% @students.each do |name, grades| %>
+      <% @students.each do |student| %>
         <div class="col-md-<%= @col_size %>">
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 style="color: white; text-align: center;"><%= name %>'s PowerGPA</h3>
+              <h3 style="color: white; text-align: center;"><%= student.name %>'s PowerGPA</h3>
             </div>
 
             <ul class="list-group">
-              <% grades['grade_info'].each do |grade_name, grade_num|%>
+              <% student.grades.each do |grade_name, grade_num|%>
                 <li class=list-group-item>
                   <h5><div style="font-size:70%;"><span class="label label-primary"><%= grade_name %>:</span> <%= grade_num.round(3) %></div></h5>
                 </li>
@@ -19,7 +19,7 @@
             </ul>
 
             <div class="panel-footer">
-              <h4 style="color: #0a94ff; text-align: center;"> Your GPA: <b><%= grades['GPA'].round(3) %></b></h4>
+              <h4 style="color: #0a94ff; text-align: center;"> Your GPA: <b><%= student.gpa.round(3) %></b></h4>
             </div>
           </div>
         </div>

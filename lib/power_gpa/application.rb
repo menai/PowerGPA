@@ -1,10 +1,11 @@
 require 'sinatra/base'
 require 'active_support'
 require 'active_support/message_encryptor'
+require 'fast_blank'
 
-require 'power_gpa/grade_fetcher'
 require 'power_gpa/gpa_calculator'
 require 'power_gpa/metrics_sender'
+require 'power_gpa/request_processor'
 require 'power_gpa/rollbar_reporter'
 
 module PowerGPA
@@ -73,16 +74,7 @@ module PowerGPA
         process_parameters
 
         Librato.timing 'gpa.calculate.time' do
-          @students = GradeFetcher.new(params).to_h
-          @students.each do |name, grade_info|
-            @students[name] = {}
-            @students[name]['grade_info'] = grade_info
-            @students[name]['GPA'] = GPACalculator.new(grade_info).to_h
-          end
-        end
-
-        @students.reject! do |name, info|
-          info['grade_info'].empty?
+          @students = RequestProcessor.new(params).call
         end
 
         Librato.increment 'gpa.calculate.count'
