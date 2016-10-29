@@ -53,7 +53,7 @@ module PowerGPA
             serverInfo: {
               apiVersion: @session[:server_info][:api_version]
             },
-            userType: @client.type.to_s
+            userType: @client.type
           },
           studentIDs: @session[:student_i_ds],
           qil: {

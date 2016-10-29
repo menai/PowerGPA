@@ -16,7 +16,7 @@ module PowerGPA
           "French 4 Acc" => 87
         })]
       else
-        api = APIClient.new(@params[:ps_url].strip.downcase, @params[:ps_username], @params[:ps_password], @params[:ps_type])
+        api = APIClient.new(@params[:ps_url].strip.downcase, @params[:ps_username], @params[:ps_password], @params[:ps_type].to_s)
         api.connect
         api.students
       end
