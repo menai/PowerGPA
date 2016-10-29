@@ -23,5 +23,3 @@ module PowerGPA
     end
   end
 end
-
-
