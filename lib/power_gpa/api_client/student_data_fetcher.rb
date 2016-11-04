@@ -78,7 +78,7 @@ module PowerGPA
 
         data['reportingTerms'].each do |term|
           # check if start date has occurred already, and that the end date has *not* occurred already
-          if (Date.parse(term['startDate']) < Date.today) && (Date.parse(term['endDate']) > Date.today)
+          if (Date.parse(term['startDate']) <= Date.today) && (Date.parse(term['endDate']) >= Date.today)
             terms << term['id']
           end
         end
