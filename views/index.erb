@@ -21,6 +21,7 @@
             </div>
             <div class="col-md-8 col-xs-offset-1 col-md-offset-1 col-xs-8">
               <input type="text" class="form-control" name="ps_url" placeholder="ps2.millburn.org">
+              <div style="color: #aeb1b7;">(Leave blank for Millburn students).</div>
             </div>
           </div>
         </div>
@@ -72,7 +73,7 @@
             </div>
             <div class="col-md-1 col-xs-offset-1 col-xs-1">
               <br>
-              <input type="checkbox" name="ps_remember" style="text-decoration: none !important;"></input>
+              <input type="checkbox" name="ps_remember" style="text-decoration: none !important;" data-toggle="remember_tooltip" data-placement="right" title="Your account is not stored in our servers!"></input>
             </div>
           </div>
         </div>
@@ -88,3 +89,12 @@
   </form>
 </div>
 </div>
+<script>
+$(function () {
+  $('[data-toggle="remember_tooltip"]').tooltip({
+    'selector': '',
+    'placement': 'right',
+    'container':'body'
+  })
+})
+</script>
