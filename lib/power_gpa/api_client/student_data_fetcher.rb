@@ -67,7 +67,7 @@ module PowerGPA
 
       def final_grades(data)
         courses = {}
-        terms = []
+        terms = [1612, 1620]
         final_grades = {}
 
         data['sections'].each do |sect|
@@ -76,12 +76,13 @@ module PowerGPA
           end
         end
 
-        data['reportingTerms'].each do |term|
-          # check if start date has occurred already, and that the end date has *not* occurred already
-          if (Date.parse(term['startDate']) <= Date.today) && (Date.parse(term['endDate']) >= Date.today)
-            terms << term['id']
-          end
-        end
+        #data['reportingTerms'].each do |term|
+          ## check if start date has occurred already, and that the end date has *not* occurred already
+          #if (Date.parse(term['startDate']) <= Date.today) && (Date.parse(term['endDate']) >= Date.today)
+            #require 'pry'; binding.pry
+            #terms << term['id']
+          #end
+        #end
 
         data['finalGrades'].each do |grade|
           if valid_grade?(grade, courses, terms)
