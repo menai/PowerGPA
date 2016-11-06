@@ -16,7 +16,14 @@ module PowerGPA
           "French 4 Acc" => 87
         })]
       else
-        api = APIClient.new(@params[:ps_url].strip.downcase, @params[:ps_username], @params[:ps_password], @params[:ps_type].to_s)
+        api = APIClient.new(
+          @params[:ps_url].strip.downcase,
+          @params[:ps_username],
+          @params[:ps_password],
+          @params[:ps_type].to_s,
+          Rack::Utils.parse_nested_query(@params[:ps_terms_for_data] || '')
+        )
+
         api.connect
         api.students
       end

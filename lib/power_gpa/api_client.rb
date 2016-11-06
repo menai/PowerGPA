@@ -12,13 +12,14 @@ module PowerGPA
     class InvalidURLError < StandardError
     end
 
-    attr_reader :type
+    attr_reader :terms_for_data, :type
 
-    def initialize(url, username, password, type)
+    def initialize(url, username, password, type, terms_for_data)
       @url = url
       @username = username
       @password = password
       @type = type
+      @terms_for_data = terms_for_data
     end
 
     def connect
