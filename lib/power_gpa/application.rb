@@ -11,13 +11,24 @@ require 'power_gpa/rollbar_reporter'
 module PowerGPA
   class Application < ::Sinatra::Base
     enable :logging
-    enable :sessions
     set :show_exceptions, :after_handler
     set :public_folder, File.expand_path("../../public/", File.dirname(__FILE__))
     set :views, File.expand_path("../../views/", File.dirname(__FILE__))
 
-    configure :production do
-      set :session_secret, ENV['SESSION_SECRET']
+    if environment == :production
+      use Rack::Session::Cookie, {
+        :key => 'rack.session',
+        :domain => 'powergpa.com',
+        :path => '/',
+        :secret =>  ENV['SESSION_SECRET']
+      }
+    else
+      use Rack::Session::Cookie, {
+        :key => 'rack.session',
+        :domain => 'localhost',
+        :path => '/',
+        :secret => 'development12345'
+      }
     end
 
     get '/' do
@@ -87,31 +98,27 @@ module PowerGPA
       end
 
       def process_parameters
-        write_credentials if remember_me?
-        params.merge!(read_credentials(decrypt: true)) if stored_credentials?
+        write_credentials if request.post?
+        params.merge!(read_credentials) if stored_credentials?
         params.merge!({ ps_url: 'ps2.millburn.org' }) if params[:ps_url].blank?
       end
 
-      def read_credentials(decrypt: false)
+      def read_credentials
         return_value = {}
 
-        if decrypt
-          request.session['powergpa.credentials'].each do |k, v|
-            return_value[k] = encryptor.decrypt_and_verify(v)
-          end
-        else
-          return_value = request.session['powergpa.credentials']
+        request.session['powergpa.credentials'].each do |k, v|
+          return_value[k] = encryptor.decrypt_and_verify(v)
         end
 
         return_value
       end
 
-      def remember_me?
-        params['ps_remember'] == 'on'
+      def remember_me_session_key
+        request.session['powergpa.remember']
       end
 
       def stored_credentials?
-        read_credentials && !read_credentials.empty?
+        remember_me_session_key && remember_me_session_key == 'true'
       end
 
       def write_credentials
@@ -120,6 +127,10 @@ module PowerGPA
         ['ps_type', 'ps_url', 'ps_username', 'ps_password'].each do |key|
           request.session['powergpa.credentials'][key] =
             encryptor.encrypt_and_sign(params[key])
+        end
+
+        if params['ps_remember'] == 'on'
+          request.session['powergpa.remember'] = 'true'
         end
       end
   end
