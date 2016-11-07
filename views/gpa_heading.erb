@@ -84,12 +84,16 @@
 
   <div class="dropdown dropdown-center center-text" style="color: black; display: inline;">
     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      Q1
+      <%= student.terms_for_data.keys.first %>
       <span class="caret"></span>
     </button>
 
     <ul class="dropdown-menu dropdown-menu-right dropdown-menu-small" aria-labelledby="dropdownMenu1">
-      <li><a href="">Q2</a></li>
+      <% student.terms_list.each do |name, id_numbers| %>
+        <li>
+          <a href="/gpa?<%= Rack::Utils.build_nested_query("ps_terms_for_data" => { name => id_numbers }) %>"><%= name %></a>
+        </li>
+      <% end %>
     </ul>
   </div>
 

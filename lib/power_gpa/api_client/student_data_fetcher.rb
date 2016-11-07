@@ -10,6 +10,8 @@ module PowerGPA
         'Science Research 3' => 'AP Science Research 3'
       }
 
+      DEFAULT_TERM_FOR_DATA = { 'Q1' => [1620, 1612, 1628] }
+
       def initialize(client, url, session)
         @client = client
         @url = url
@@ -28,10 +30,10 @@ module PowerGPA
           next unless d['finalGrades']
 
           name = d['student']['firstName']
-          grades = final_grades(d)
+          grades, terms_for_data, terms_list = final_grades(d, @client.terms_for_data)
           next if grades.empty?
 
-          students.push(Student.new(name, grades))
+          students.push(Student.new(name, grades, terms_for_data, terms_list))
         end
 
         students
@@ -65,9 +67,18 @@ module PowerGPA
         JSON.parse(transcript)
       end
 
-      def final_grades(data)
+      def final_grades(data, terms_for_data)
+        if !terms_for_data || terms_for_data.empty?
+          terms_for_data = DEFAULT_TERM_FOR_DATA
+        end
+
+        # Convert all values to integers, since that's the format in which
+        # PowerSchool provides the data.
+        terms_for_data_ids = terms_for_data.values.flatten
+        terms_for_data_ids.map!(&:to_i)
+
         courses = {}
-        terms = [1612, 1620]
+        terms_list = Hash.new { |k, v| k[v] = [] }
         final_grades = {}
 
         data['sections'].each do |sect|
@@ -76,21 +87,19 @@ module PowerGPA
           end
         end
 
-        #data['reportingTerms'].each do |term|
-          ## check if start date has occurred already, and that the end date has *not* occurred already
-          #if (Date.parse(term['startDate']) <= Date.today) && (Date.parse(term['endDate']) >= Date.today)
-            #require 'pry'; binding.pry
-            #terms << term['id']
-          #end
-        #end
+        data['reportingTerms'].each do |term|
+          if term['yearid'] == data['yearId']
+            terms_list[term['title']] << term['id']
+          end
+        end
 
         data['finalGrades'].each do |grade|
-          if valid_grade?(grade, courses, terms)
+          if valid_grade?(grade, courses, terms_for_data_ids)
             final_grades[courses.key(grade['sectionid'])] = grade['percent']
           end
         end
 
-        final_grades
+        [final_grades, terms_for_data, terms_list]
       end
 
       def section_title(section)
