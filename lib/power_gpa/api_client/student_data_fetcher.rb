@@ -1,6 +1,9 @@
 module PowerGPA
   class APIClient
     class StudentDataFetcher
+      class InvalidStudentError < StandardError
+      end
+
       ACC_COURSE_WHITELIST = {
         'Science Research 1' => 'Science Research 1 Acc'
       }
@@ -30,8 +33,12 @@ module PowerGPA
           next unless d['finalGrades']
 
           name = d['student']['firstName']
-          grades, terms_for_data, terms_list = final_grades(d, @client.terms_for_data)
-          next if grades.empty?
+
+          begin
+            grades, terms_for_data, terms_list = final_grades(d, @client.terms_for_data)
+          rescue InvalidStudentError
+            next
+          end
 
           students.push(Student.new(name, grades, terms_for_data, terms_list))
         end
@@ -86,6 +93,8 @@ module PowerGPA
             courses[section_title(sect)] = sect['id']
           end
         end
+
+        raise InvalidStudentError if courses.empty?
 
         data['reportingTerms'].each do |term|
           if term['yearid'] == data['yearId']
