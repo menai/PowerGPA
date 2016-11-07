@@ -7,7 +7,7 @@
         <div class="col-md-<%= @col_size %>">
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 style="color: white; text-align: center;"><%= student.name %>'s PowerGPA</h3>
+              <%= erb :gpa_heading, locals: { student: student } %>
             </div>
 
             <ul class="list-group">
