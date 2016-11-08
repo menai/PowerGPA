@@ -121,6 +121,8 @@ module PowerGPA
       def read_credentials
         return_value = {}
 
+        return return_value if !request.session['powergpa.credentials']
+
         begin
           request.session['powergpa.credentials'].each do |k, v|
             return_value[k] = encryptor.decrypt_and_verify(v)
