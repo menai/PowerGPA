@@ -90,6 +90,10 @@ module PowerGPA
 
         Librato.increment 'gpa.calculate.count'
 
+        if params[:ps_terms_for_data]
+          Librato.increment 'gpa.calculate.mp'
+        end
+
         erb :gpa
       end
 
