@@ -59,7 +59,7 @@ module PowerGPA
     end
 
     get '/clear_credentials' do
-      request.session['powergpa.credentials'] = {}
+      request.session['powergpa.credentials'] = nil
       redirect '/'
     end
 
@@ -103,25 +103,17 @@ module PowerGPA
 
       def process_parameters
         write_credentials if request.post?
-        params.merge!(read_credentials) if should_read_credentials?
+        params.merge!(read_credentials)
 
         if !params[:ps_url] || (params[:ps_url] && params[:ps_url].blank?)
           params.merge!({ ps_url: 'ps2.millburn.org' })
         end
       end
 
-      def should_read_credentials?
-        if params['ps_terms_for_data']
-          true
-        else
-          remember_me_session_key && remember_me_session_key == 'true'
-        end
-      end
-
       def read_credentials
         return_value = {}
 
-        return return_value if !request.session['powergpa.credentials']
+        return return_value if !user_credentials
 
         begin
           request.session['powergpa.credentials'].each do |k, v|
@@ -135,12 +127,12 @@ module PowerGPA
         return_value
       end
 
-      def remember_me_session_key
-        request.session['powergpa.remember']
+      def stored_credentials?
+        user_credentials && !user_credentials.empty?
       end
 
-      def stored_credentials?
-        remember_me_session_key && remember_me_session_key == 'true'
+      def user_credentials
+        request.session['powergpa.credentials']
       end
 
       def write_credentials
@@ -149,10 +141,6 @@ module PowerGPA
         ['ps_type', 'ps_url', 'ps_username', 'ps_password'].each do |key|
           request.session['powergpa.credentials'][key] =
             encryptor.encrypt_and_sign(params[key])
-        end
-
-        if params['ps_remember'] == 'on'
-          request.session['powergpa.remember'] = 'true'
         end
       end
   end
