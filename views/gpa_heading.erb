@@ -1,0 +1,101 @@
+<style>
+  .dropdown.dropdown-center {
+    display: inline;
+    width: 180px;
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+
+  .dropdown-menu.dropdown-menu-center {
+    width: 180px;
+  }
+
+  .dropdown-menu-small {
+    min-width: 50px;
+  }
+
+  .center-text {
+    text-align: center;
+  }
+
+  .heading-text {
+    text-align: center;
+    color: white;
+  }
+
+  .headline-wrapper {
+    display: table;
+    margin: 0 auto;
+    margin-top: 23px;
+  }
+
+  .pull-right {
+    float: right !important;
+    margin-left: 25px;
+  }
+
+  @media (max-width: 544px) {
+    .heading-text {
+      font-size: 24px;
+    }
+
+    .dropdown button {
+      margin-top: 5px;
+    }
+  }
+
+  @media (max-width: 490px) {
+    .heading-text {
+      font-size: 18px;
+    }
+
+    .dropdown button {
+      margin-top: 0px;
+    }
+  }
+
+  @media (max-width: 370px) {
+    .heading-text {
+      font-size: 13px;
+    }
+
+    .dropdown button {
+      margin-top: -6px;
+    }
+
+    .pull-right {
+      float: right !important;
+      margin-left: 25px;
+    }
+  }
+
+  @media (min-width: 545px) {
+    .heading-text {
+      font-size: 34px;
+    }
+    .dropdown button {
+      margin-top: 12px;
+    }
+  }
+</style>
+
+<div class="headline-wrapper">
+  <p class="heading-text pull-left"><%= student.name %>'s </p>
+
+  <div class="dropdown dropdown-center center-text" style="color: black; display: inline;">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <%= student.terms_for_data.keys.first %>
+      <span class="caret"></span>
+    </button>
+
+    <ul class="dropdown-menu dropdown-menu-right dropdown-menu-small" aria-labelledby="dropdownMenu1">
+      <% student.terms_list.each do |name, id_numbers| %>
+        <li>
+          <a href="/gpa?<%= Rack::Utils.build_nested_query("ps_terms_for_data" => { name => id_numbers }) %>"><%= name %></a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <p class="heading-text pull-right">PowerGPA</p>
+</div>

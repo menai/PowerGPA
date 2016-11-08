@@ -99,18 +99,31 @@ module PowerGPA
 
       def process_parameters
         write_credentials if request.post?
-        params.merge!(read_credentials) if stored_credentials?
+        params.merge!(read_credentials) if should_read_credentials?
 
         if !params[:ps_url] || (params[:ps_url] && params[:ps_url].blank?)
           params.merge!({ ps_url: 'ps2.millburn.org' })
         end
       end
 
+      def should_read_credentials?
+        if params['ps_terms_for_data']
+          true
+        else
+          remember_me_session_key && remember_me_session_key == 'true'
+        end
+      end
+
       def read_credentials
         return_value = {}
 
-        request.session['powergpa.credentials'].each do |k, v|
-          return_value[k] = encryptor.decrypt_and_verify(v)
+        begin
+          request.session['powergpa.credentials'].each do |k, v|
+            return_value[k] = encryptor.decrypt_and_verify(v)
+          end
+        rescue ActiveSupport::MessageVerifier::InvalidSignature
+          request.session['powergpa.credentials'] = nil
+          return_value = {}
         end
 
         return_value
