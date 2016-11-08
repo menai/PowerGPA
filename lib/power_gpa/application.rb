@@ -100,7 +100,10 @@ module PowerGPA
       def process_parameters
         write_credentials if request.post?
         params.merge!(read_credentials) if stored_credentials?
-        params.merge!({ ps_url: 'ps2.millburn.org' }) if params[:ps_url].blank?
+
+        if !params[:ps_url] || (params[:ps_url] && params[:ps_url].blank?)
+          params.merge!({ ps_url: 'ps2.millburn.org' })
+        end
       end
 
       def read_credentials
