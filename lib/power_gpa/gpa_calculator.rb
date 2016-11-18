@@ -40,7 +40,7 @@ module PowerGPA
         @grades[course] =
           if course.start_with?('AP ')
             grade + Rational(2, 3).to_f
-          elsif course.include?('Acc')
+          elsif course.include?('Acc') || course.include?('Honors')
             grade + Rational(1, 3).to_f
           else
             # no-op

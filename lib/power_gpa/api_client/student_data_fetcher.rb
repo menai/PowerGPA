@@ -146,7 +146,7 @@ module PowerGPA
 
         AP_COURSE_WHITELIST[course_name] ||
           ACC_COURSE_WHITELIST[course_name] ||
-          ['AP', 'Acc', 'CPA', 'CPB'].any? do |name|
+          ['AP', 'Acc', 'Honors', 'CPA', 'CPB'].any? do |name|
             course_name.include?(name)
           end
       end
