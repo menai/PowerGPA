@@ -13,8 +13,6 @@ module PowerGPA
         'Science Research 3' => 'AP Science Research 3'
       }
 
-      DEFAULT_TERM_FOR_DATA = { 'Q1' => [1620, 1612, 1628] }
-
       def initialize(client, url, session)
         @client = client
         @url = url
@@ -48,6 +46,23 @@ module PowerGPA
 
       private
 
+      def calculate_current_term(data)
+        terms = Hash.new { |k, v| k[v] = [] }
+
+        data['reportingTerms'].each do |term|
+          # Current reporting term can only be a quarter. If the title of the
+          # term doesn't contain an uppercase Q, then we'll jump to the next term.
+          next unless term['title'].include?('Q')
+
+          # Check if start date has occurred already, and that the end date has *not* occurred already
+          if (Date.parse(term['startDate']) <= Date.today) && (Date.parse(term['endDate']) >= Date.today)
+            terms[term['title']] << term['id']
+          end
+        end
+
+        terms
+      end
+
       def fetch
         student_client = Savon.client(
           endpoint: @url + "/pearson-rest/services/PublicPortalServiceJSON?response=application/json",
@@ -76,7 +91,7 @@ module PowerGPA
 
       def final_grades(data, terms_for_data)
         if !terms_for_data || terms_for_data.empty?
-          terms_for_data = DEFAULT_TERM_FOR_DATA
+          terms_for_data = calculate_current_term(data)
         end
 
         # Convert all values to integers, since that's the format in which
