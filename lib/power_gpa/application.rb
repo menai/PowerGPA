@@ -59,7 +59,7 @@ module PowerGPA
     end
 
     get '/clear_credentials' do
-      request.session['powergpa.credentials'] = nil
+      clear_credentials
       redirect '/'
     end
 
@@ -72,6 +72,8 @@ module PowerGPA
         request.session['powergpa.error'] = :invalid_credentials
       elsif $!.class == APIClient::InvalidURLError
         request.session['powergpa.error'] = :invalid_url
+      elsif $!.class == APIClient::CorruptedDataError
+        clear_credentials
       else
         RollbarReporter.call(env)
         request.session['powergpa.error'] = :unknown
@@ -95,6 +97,10 @@ module PowerGPA
         end
 
         erb :gpa
+      end
+
+      def clear_credentials
+        request.session['powergpa.credentials'] = nil
       end
 
       def encryptor

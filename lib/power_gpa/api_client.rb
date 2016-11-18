@@ -6,6 +6,9 @@ require 'power_gpa/api_client/student_data_fetcher'
 
 module PowerGPA
   class APIClient
+    class CorruptedDataError < StandardError
+    end
+
     class InvalidCredentialsError < StandardError
     end
 
@@ -41,9 +44,8 @@ module PowerGPA
 
       begin
         login = client.call(:login, message: { username: @username, password: @password, userType: @type } )
-      rescue Savon::SOAPFault => e
-        RollbarReporter.scope!({ soap_error_hash: e.to_hash })
-        raise e
+      rescue Savon::SOAPFault
+        raise CorruptedDataError
       end
 
       if bad_credentials?(login)
