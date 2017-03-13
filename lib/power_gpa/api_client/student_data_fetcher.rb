@@ -28,9 +28,14 @@ module PowerGPA
         end
 
         data.each do |d|
-          next unless d['finalGrades']
-
           name = d['student']['firstName']
+
+          if d['schools']['schoolDisabled']
+            students.push(DisabledAccountStudent.new(name, {}, {}, {}))
+            next
+          end
+
+          next unless d['finalGrades']
 
           begin
             grades, terms_for_data, terms_list = final_grades(d, @client.terms_for_data)

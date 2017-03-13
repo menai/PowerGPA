@@ -9,5 +9,9 @@ module PowerGPA
       @terms_for_data = terms_for_data
       @terms_list = terms_list
     end
+
+    def disabled?
+      false
+    end
   end
 end
