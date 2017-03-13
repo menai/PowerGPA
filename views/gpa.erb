@@ -10,17 +10,27 @@
               <%= erb :gpa_heading, locals: { student: student } %>
             </div>
 
-            <ul class="list-group">
-              <% student.grades.each do |grade_name, grade_num|%>
+            <% if student.disabled? %>
+              <ul class="list-group">
                 <li class=list-group-item>
-                  <h5><div style="font-size:70%;"><span class="label label-primary"><%= grade_name %>:</span> <%= grade_num.round(3) %></div></h5>
+                  <h5><div style="font-size:70%;">
+                    Error: your school has disabled access to grades.
+                  </div></h5>
                 </li>
-              <% end %>
-            </ul>
+              </ul>
+            <% else %>
+              <ul class="list-group">
+                <% student.grades.each do |grade_name, grade_num|%>
+                  <li class=list-group-item>
+                    <h5><div style="font-size:70%;"><span class="label label-primary"><%= grade_name %>:</span> <%= grade_num.round(3) %></div></h5>
+                  </li>
+                <% end %>
+              </ul>
 
-            <div class="panel-footer">
-              <h4 style="color: #0a94ff; text-align: center;"> Your GPA: <b><%= student.gpa.round(3) %></b></h4>
-            </div>
+              <div class="panel-footer">
+                <h4 style="color: #0a94ff; text-align: center;"> Your GPA: <b><%= student.gpa.round(3) %></b></h4>
+              </div>
+            <% end %>
           </div>
         </div>
       <% end %>

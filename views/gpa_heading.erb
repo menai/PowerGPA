@@ -80,22 +80,25 @@
 </style>
 
 <div class="headline-wrapper">
-  <p class="heading-text pull-left"><%= student.name %>'s </p>
+  <% if student.disabled? %>
+    <p class="heading-text pull-left"><%= student.name %>'s PowerGPA</p>
+  <% else %>
+    <p class="heading-text pull-left"><%= student.name %>'s </p>
+    <div class="dropdown dropdown-center center-text" style="color: black; display: inline;">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+         <%= student.terms_for_data.keys.first %>
+        <span class="caret"></span>
+      </button>
 
-  <div class="dropdown dropdown-center center-text" style="color: black; display: inline;">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <%= student.terms_for_data.keys.first %>
-      <span class="caret"></span>
-    </button>
+      <ul class="dropdown-menu dropdown-menu-right dropdown-menu-small" aria-labelledby="dropdownMenu1">
+        <% student.terms_list.each do |name, id_numbers| %>
+          <li>
+            <a href="/gpa?<%= Rack::Utils.build_nested_query("ps_terms_for_data" => { name => id_numbers }) %>"><%= name %></a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
 
-    <ul class="dropdown-menu dropdown-menu-right dropdown-menu-small" aria-labelledby="dropdownMenu1">
-      <% student.terms_list.each do |name, id_numbers| %>
-        <li>
-          <a href="/gpa?<%= Rack::Utils.build_nested_query("ps_terms_for_data" => { name => id_numbers }) %>"><%= name %></a>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-
-  <p class="heading-text pull-right">PowerGPA</p>
+    <p class="heading-text pull-right">PowerGPA</p>
+  <% end %>
 </div>
