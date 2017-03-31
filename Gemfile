@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+ruby '2.3.3'
+
 # Metrics / monitoring
 gem 'librato-rack'
 gem 'rollbar'
