@@ -109,8 +109,10 @@ module PowerGPA
         final_grades = {}
 
         data['sections'].each do |sect|
-          if valid_section?(sect)
-            courses[section_title(sect)] = sect['id']
+          section_title = format_section_title(sect['schoolCourseTitle'])
+
+          if valid_section?(section_title)
+            courses[section_title] = sect['id']
           end
         end
 
@@ -131,9 +133,7 @@ module PowerGPA
         [final_grades, terms_for_data, terms_list]
       end
 
-      def section_title(section)
-        course_name = section['schoolCourseTitle']
-
+      def format_section_title(course_name)
         AP_COURSE_WHITELIST[course_name] ||
           ACC_COURSE_WHITELIST[course_name] ||
           course_name
@@ -146,9 +146,7 @@ module PowerGPA
         grade['percent'] != 0
       end
 
-      def valid_section?(section)
-        course_name = section['schoolCourseTitle']
-
+      def valid_section?(course_name)
         AP_COURSE_WHITELIST[course_name] ||
           ACC_COURSE_WHITELIST[course_name] ||
           ['AP', 'Acc', 'Honors', 'CPA', 'CPB'].any? do |name|
