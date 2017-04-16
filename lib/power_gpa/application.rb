@@ -18,7 +18,7 @@ module PowerGPA
     if environment == :production
       use Rack::Session::Cookie, {
         :key => '_powergpa_1_session',
-        :domain => 'powergpa.com',
+        :domain => '.powergpa.com',
         :path => '/',
         :secret =>  ENV['SESSION_SECRET']
       }
