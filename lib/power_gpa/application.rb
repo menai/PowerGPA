@@ -22,6 +22,14 @@ module PowerGPA
         :path => '/',
         :secret =>  ENV['SESSION_SECRET']
       }
+
+      require 'remote_syslog_logger'
+
+      logger = RemoteSyslogLogger.new(
+        ENV['PAPERTRAIL_HOST'],
+        ENV['PAPERTRAIL_PORT'],
+        { program: 'powergpa-macluster' })
+      use Rack::CommonLogger, logger
     else
       use Rack::Session::Cookie, {
         :key => '_powergpa_1_session',
