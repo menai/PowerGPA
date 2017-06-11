@@ -14,6 +14,7 @@ module PowerGPA
     set :show_exceptions, :after_handler
     set :public_folder, File.expand_path("../../public/", File.dirname(__FILE__))
     set :views, File.expand_path("../../views/", File.dirname(__FILE__))
+    set :http_origin, ENV['HTTP_ORIGIN']
 
     if environment == :production
       use Rack::Session::Cookie, {
@@ -76,6 +77,11 @@ module PowerGPA
     end
 
     post '/api/v1/gpa' do
+      unless env['HTTP_ORIGIN'].include?(self.class.http_origin)
+        status 422
+        return ''
+      end
+
       params_present = ['ps_type', 'ps_url', 'ps_username', 'ps_password'].all? do |key|
         params.key?(key)
       end
