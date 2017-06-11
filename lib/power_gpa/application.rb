@@ -75,6 +75,27 @@ module PowerGPA
       redirect '/'
     end
 
+    post '/api/v1/gpa' do
+      params_present = ['ps_type', 'ps_url', 'ps_username', 'ps_password'].all? do |key|
+        params.key?(key)
+      end
+
+      if params_present
+        calculate_gpa
+        JSON.dump({ students: @students })
+      else
+        status 422
+        content_type 'application/json'
+
+        JSON.dump({
+          error: {
+            name: 'missing_params',
+            description: 'Some of the required parameters are missing.'
+          }
+        })
+      end
+    end
+
     error 404 do
       redirect '/'
     end
@@ -95,8 +116,10 @@ module PowerGPA
     end
 
     private
-      def calculate_gpa_and_return
-        process_parameters
+      def calculate_gpa
+        if !params[:ps_url] || (params[:ps_url] && params[:ps_url].blank?)
+          params.merge!({ ps_url: 'ps2.millburn.org' })
+        end
 
         Librato.timing 'gpa.calculate.time' do
           @students = RequestProcessor.new(params).call
@@ -107,7 +130,16 @@ module PowerGPA
         if params[:ps_terms_for_data]
           Librato.increment 'gpa.calculate.mp'
         end
+      end
 
+      def calculate_gpa_and_return
+        process_parameters
+
+        if !params[:ps_url] || (params[:ps_url] && params[:ps_url].blank?)
+          params.merge!({ ps_url: 'ps2.millburn.org' })
+        end
+
+        calculate_gpa
         erb :gpa
       end
 
@@ -122,10 +154,6 @@ module PowerGPA
       def process_parameters
         write_credentials if request.post?
         params.merge!(read_credentials)
-
-        if !params[:ps_url] || (params[:ps_url] && params[:ps_url].blank?)
-          params.merge!({ ps_url: 'ps2.millburn.org' })
-        end
       end
 
       def read_credentials

@@ -1,11 +1,10 @@
 source "https://rubygems.org"
 
-ruby '2.3.1'
+ruby '2.4.0'
 
 # Metrics / monitoring
 gem 'librato-rack'
 gem 'rollbar'
-gem 'remote_syslog_logger'
 
 # Web stack
 gem 'activesupport'
@@ -29,6 +28,10 @@ end
 
 group :development, :test do
   gem 'rspec'
+end
+
+group :production do
+  gem 'remote_syslog_logger'
 end
 
 group :test do
