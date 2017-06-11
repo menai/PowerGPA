@@ -13,5 +13,15 @@ module PowerGPA
     def disabled?
       false
     end
+
+    def to_json(_state)
+      JSON.dump({
+        gpa: @gpa,
+        grades: @grades,
+        name: @name,
+        terms_for_data: @terms_for_data,
+        terms_list: @terms_list
+      })
+    end
   end
 end
