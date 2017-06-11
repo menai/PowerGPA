@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby '2.4.0'
+ruby '2.3.4'
 
 # Metrics / monitoring
 gem 'librato-rack'
