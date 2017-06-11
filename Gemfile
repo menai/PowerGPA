@@ -11,7 +11,7 @@ gem 'activesupport'
 gem 'nokogiri', '1.7.1'
 gem 'puma'
 gem "rack", "~> 2"
-gem "sinatra", github: 'sinatra/sinatra'
+gem "sinatra", '2.0.0'
 
 # PS API
 gem "savon", "~> 2.0"
