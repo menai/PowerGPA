@@ -1,3 +1,6 @@
 name: powergpa
 port: 9292
 environment_variables: true
+hosts:
+  - new2.powergpa.com
+  - powergpa.mac2cluster.jonathanmoss.me
