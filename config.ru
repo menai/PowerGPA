@@ -6,6 +6,8 @@ if ENV['RACK_ENV'] == 'production'
 
   require 'dotenv'
   Dotenv.load
+
+  puts "ROLLBAR_ENDPOINT=#{ENV['ROLLBAR_ENDPOINT']}"
 end
 
 use PowerGPA::MetricsSender
