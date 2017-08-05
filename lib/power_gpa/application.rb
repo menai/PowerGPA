@@ -102,6 +102,10 @@ module PowerGPA
       end
     end
 
+    get '/ping' do
+      'ok'
+    end
+
     error 404 do
       redirect '/'
     end
