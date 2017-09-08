@@ -21,7 +21,7 @@ gem "httpclient", "~> 2.4.0"
 # Util
 gem 'dotenv'
 gem 'fast_blank'
-gem 'macluster-deploy', git: 'https://github.com/maclover7/macluster-deploy'
+#gem 'macluster-deploy', git: 'https://github.com/maclover7/macluster-deploy'
 
 group :development do
   gem "pry"

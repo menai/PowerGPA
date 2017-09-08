@@ -144,6 +144,9 @@ module PowerGPA
         courses.values.include?(grade['sectionid']) &&
         terms.include?(grade['reportingTermId']) &&
         grade['percent'] != 0
+      rescue => e
+        $stdout.puts "BADBAD: #{grade}"
+        raise e
       end
 
       def valid_section?(course_name)

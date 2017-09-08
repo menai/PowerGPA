@@ -1,9 +1,3 @@
-GIT
-  remote: https://github.com/maclover7/macluster-deploy
-  revision: 93351b6e9e00212c767c5880d5887bb5a3b9689e
-  specs:
-    macluster-deploy ()
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -113,7 +107,6 @@ DEPENDENCIES
   foreman
   httpclient (~> 2.4.0)
   librato-rack
-  macluster-deploy!
   nokogiri (= 1.7.1)
   pry
   puma
