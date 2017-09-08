@@ -124,6 +124,10 @@ module PowerGPA
           end
         end
 
+        if !data['finalGrades'].is_a?(Array)
+          data['finalGrades'] = [data['finalGrades']]
+        end
+
         data['finalGrades'].each do |grade|
           if valid_grade?(grade, courses, terms_for_data_ids)
             final_grades[courses.key(grade['sectionid'])] = grade['percent']
